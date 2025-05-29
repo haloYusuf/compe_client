@@ -11,7 +11,9 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^9.2.4
   get: ^4.7.2
+  get_storage: ^2.1.1
   http: ^1.4.0
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -20,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    

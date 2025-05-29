@@ -1,4 +1,4 @@
-import 'package:compe_client/modules/splash/splash_controller.dart';
+import 'package:compe_client/modules/splash/controllers/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

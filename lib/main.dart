@@ -1,3 +1,4 @@
+import 'package:compe_client/bindings/initial_binding.dart';
 import 'package:compe_client/route/route_name.dart';
 import 'package:compe_client/route/route_page.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      getPages: RoutePage.pages,
+      title: 'Compe App',
+      debugShowCheckedModeBanner: false,
       initialRoute: RouteName.splash,
+      getPages: RoutePage.pages,
+      initialBinding: InitialBinding(),
     );
   }
 }

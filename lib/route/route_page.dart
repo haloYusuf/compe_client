@@ -1,5 +1,5 @@
-import 'package:compe_client/modules/splash/splash_binding.dart';
-import 'package:compe_client/modules/splash/splash_view.dart';
+import 'package:compe_client/modules/splash/bindings/splash_binding.dart';
+import 'package:compe_client/modules/splash/views/splash_view.dart';
 import 'package:compe_client/route/route_name.dart';
 import 'package:get/get.dart';
 
