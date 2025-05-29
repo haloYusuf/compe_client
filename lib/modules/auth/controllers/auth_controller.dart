@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:compe_client/data/models/user_model.dart';
 import 'package:compe_client/data/services/api_service.dart';
 import 'package:compe_client/data/services/storage_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -41,7 +42,6 @@ class AuthController extends GetxController {
         currentUser.value = storedUser;
       }
     }
-
     isLoading.value = false;
   }
 
@@ -69,20 +69,35 @@ class AuthController extends GetxController {
           await _processTokenAndSaveUserInfo(newAccessToken);
         } else {
           Get.snackbar(
-              'Login Gagal', 'Gagal mendapatkan access token setelah login.');
+            'Login Gagal',
+            'Gagal mendapatkan access token setelah login.',
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
           return false;
         }
-        // Get.offAllNamed(AppRoutes.HOME);
         return true;
       } else {
         final errorData = jsonDecode(response.body);
-        Get.snackbar('Login Gagal',
-            errorData['message'] ?? 'Email atau Password salah.');
+        Get.snackbar(
+          'Login Gagal',
+          errorData['message'] ?? 'Email atau Password salah.',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
         return false;
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error', 'Terjadi kesalahan: $e');
+      Get.snackbar(
+        'Error',
+        'Terjadi kesalahan: $e',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
       return false;
     }
   }
