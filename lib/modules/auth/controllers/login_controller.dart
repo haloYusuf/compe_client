@@ -44,7 +44,7 @@ class LoginController extends GetxController {
     } else {
       bool value = await authController.login(data, pass);
       if (value) {
-        Get.offAllNamed(RouteName.home);
+        Get.offAllNamed(RouteName.main);
       }
     }
     _isLoading.value = false;

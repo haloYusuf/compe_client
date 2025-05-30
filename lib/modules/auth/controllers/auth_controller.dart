@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:compe_client/data/models/user_model.dart';
 import 'package:compe_client/data/services/api_service.dart';
 import 'package:compe_client/data/services/storage_service.dart';
+import 'package:compe_client/route/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -13,8 +14,6 @@ class AuthController extends GetxController {
 
   var isLogin = false.obs;
   var isLoading = false.obs;
-
-  var currentUser = Rx<UserModel?>(null);
 
   @override
   void onInit() {
@@ -30,16 +29,6 @@ class AuthController extends GetxController {
     if (isLogin.value) {
       if (!JwtDecoder.isExpired(token)) {
         await _processTokenAndSaveUserInfo(token);
-      } else {
-        final storedUser = _storageService.getUserInfo();
-        if (storedUser != null) {
-          currentUser.value = storedUser;
-        }
-      }
-    } else {
-      final storedUser = _storageService.getUserInfo();
-      if (storedUser != null) {
-        currentUser.value = storedUser;
       }
     }
     isLoading.value = false;
@@ -49,7 +38,6 @@ class AuthController extends GetxController {
     try {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
       final user = UserModel.fromJson(decodedToken);
-      currentUser.value = user;
       await _storageService.saveUserInfo(user);
       isLogin.value = true;
     } catch (e) {
@@ -61,9 +49,16 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       final response = await _apiService.login(data: data, password: password);
+
       isLoading.value = false;
 
       if (response.statusCode == 200) {
+        final resData = jsonDecode(response.body);
+        await _storageService.saveTokens(
+          accessToken: resData['accessToken'],
+          refreshToken: resData['refreshToken'],
+        );
+
         final newAccessToken = await _storageService.getAccessToken();
         if (newAccessToken.isNotEmpty) {
           await _processTokenAndSaveUserInfo(newAccessToken);
@@ -109,17 +104,16 @@ class AuthController extends GetxController {
     } catch (e) {
       await _storageService.clearAllData();
     } finally {
-      currentUser.value = null;
       isLogin.value = false;
       isLoading.value = false;
-      // Get.offAllNamed(AppRoutes.LOGIN);
+      Get.offAllNamed(RouteName.login);
     }
   }
 
-  Future<void> updateUserInfoFromNewToken() async {
-    final token = await _storageService.getAccessToken();
-    if (token.isNotEmpty && !JwtDecoder.isExpired(token)) {
-      await _processTokenAndSaveUserInfo(token);
-    }
-  }
+  // Future<void> updateUserInfoFromNewToken() async {
+  //   final token = await _storageService.getAccessToken();
+  //   if (token.isNotEmpty && !JwtDecoder.isExpired(token)) {
+  //     await _processTokenAndSaveUserInfo(token);
+  //   }
+  // }
 }

@@ -52,6 +52,7 @@ class RegisterView extends GetView<RegisterController> {
                     height: 24,
                   ),
                   TextField(
+                    controller: controller.userNameController,
                     keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -65,6 +66,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
                   TextField(
+                    controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -77,47 +79,58 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                     ),
                   ),
-                  TextField(
-                    textInputAction: TextInputAction.next,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      filled: true,
-                      fillColor: Colors.white,
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.visibility,
+                  Obx(
+                    () => TextField(
+                      controller: controller.passController,
+                      textInputAction: TextInputAction.next,
+                      obscureText: !controller.getVisibilityPass(),
+                      obscuringCharacter: '*',
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        filled: true,
+                        fillColor: Colors.white,
+                        suffixIcon: IconButton(
+                          onPressed: controller.handleSetVisibilityPass,
+                          icon: Icon(
+                            controller.getVisibilityPass()
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
                         ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
+                    ),
+                  ),
+                  Obx(
+                    () => TextField(
+                      controller: controller.confirmPassController,
+                      textInputAction: TextInputAction.next,
+                      obscureText: !controller.getVisibilityConfirmPass(),
+                      obscuringCharacter: '*',
+                      decoration: InputDecoration(
+                        hintText: 'Confirm Password',
+                        filled: true,
+                        fillColor: Colors.white,
+                        suffixIcon: IconButton(
+                          onPressed: controller.handleSetVisibilityConfirmPass,
+                          icon: Icon(
+                            controller.getVisibilityPass()
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
                   TextField(
-                    textInputAction: TextInputAction.next,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      hintText: 'Confirm Password',
-                      filled: true,
-                      fillColor: Colors.white,
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.visibility,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  TextField(
+                    controller: controller.phoneNumberController,
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
@@ -163,20 +176,26 @@ class RegisterView extends GetView<RegisterController> {
                   SizedBox(
                     height: 8,
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFC6B68),
-                      padding: EdgeInsets.all(24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                  Obx(
+                    () => ElevatedButton(
+                      onPressed: controller.getIsLoading()
+                          ? null
+                          : controller.handleRegister,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFFC6B68),
+                        padding: EdgeInsets.all(24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                        fontFamily: Constant.fontContent,
-                        color: Colors.white,
+                      child: Text(
+                        controller.getIsLoading()
+                            ? 'Create Account ...'
+                            : 'Register',
+                        style: TextStyle(
+                          fontFamily: Constant.fontContent,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

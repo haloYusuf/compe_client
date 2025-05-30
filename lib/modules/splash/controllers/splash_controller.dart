@@ -26,7 +26,7 @@ class SplashController extends GetxController {
       const Duration(seconds: 2),
       () {
         if (authController.isLogin.value) {
-          Get.offAllNamed(RouteName.home);
+          Get.offAllNamed(RouteName.main);
         } else {
           Get.offAllNamed(RouteName.login);
         }

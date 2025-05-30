@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer' as developer;
 
 import 'package:http/http.dart' as http;
 import 'package:compe_client/data/services/storage_service.dart';
@@ -19,7 +18,7 @@ class ApiService extends GetxService {
   ) async {
     http.Response res = await requestFunction();
 
-    if (res.statusCode == 401) {
+    if (res.statusCode == 401 || res.statusCode == 403) {
       // Handle Access Token Expired
       if (!_isRefresh) {
         _isRefresh = true;
@@ -32,22 +31,18 @@ class ApiService extends GetxService {
 
           if (refreshed) {
             res = await requestFunction();
-          } else {
-            developer.log('Gagal Refresh Token. Logout!');
           }
         } catch (e) {
-          developer.log('Gagal Error Refresh Token ${e.toString()}. Logout!');
           _isRefresh = false;
           _refreshCompleter!.complete(false);
         }
-      }
-    } else {
-      developer.log('Service sedang berlangsung. Menunggu ...');
-      bool refreshed = await _refreshCompleter!.future;
-      if (refreshed) {
-        res = await requestFunction();
       } else {
-        developer.log('Service gagal.');
+        if (_refreshCompleter != null) {
+          bool ongoingRefreshSucceeded = await _refreshCompleter!.future;
+          if (ongoingRefreshSucceeded) {
+            res = await requestFunction();
+          }
+        }
       }
     }
     return res;
@@ -75,7 +70,6 @@ class ApiService extends GetxService {
         return false;
       }
     } catch (e) {
-      developer.log('gagal melakukan refresh token: ${e.toString()}');
       return false;
     }
   }
@@ -128,18 +122,39 @@ class ApiService extends GetxService {
   }
 
   Future<http.Response> logout() async {
+    String refeshToken = await _storageService.getRefreshToken();
     final res = _handleRequest(
-      () async => http.post(
+      () async => http.delete(
         Uri.parse('$_baseUrl/auth/logout'),
         headers: await _getHeaders(),
-        body: (
+        body: jsonEncode(
           {
-            'refreshToken': _storageService.getRefreshToken(),
+            'refreshToken': refeshToken,
           },
         ),
       ),
     );
     await _storageService.clearAllData();
+    return res;
+  }
+
+  Future<http.Response> getHighlightCompe() async {
+    final res = _handleRequest(
+      () async => http.get(
+        Uri.parse('$_baseUrl/compe/open/latest/'),
+        headers: await _getHeaders(),
+      ),
+    );
+    return res;
+  }
+
+  Future<http.Response> getCompeById({required String id}) async {
+    final res = _handleRequest(
+      () async => http.get(
+        Uri.parse('$_baseUrl/compe/$id'),
+        headers: await _getHeaders(),
+      ),
+    );
     return res;
   }
 }

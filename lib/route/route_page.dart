@@ -2,8 +2,10 @@ import 'package:compe_client/modules/auth/bindings/login_binding.dart';
 import 'package:compe_client/modules/auth/bindings/register_binding.dart';
 import 'package:compe_client/modules/auth/views/login_view.dart';
 import 'package:compe_client/modules/auth/views/register_view.dart';
-import 'package:compe_client/modules/home/bindings/home_binding.dart';
-import 'package:compe_client/modules/home/views/home_view.dart';
+import 'package:compe_client/modules/detail/bindings/detail_binding.dart';
+import 'package:compe_client/modules/detail/views/detail_view.dart';
+import 'package:compe_client/modules/main/bindings/main_binding.dart';
+import 'package:compe_client/modules/main/views/main_view.dart';
 import 'package:compe_client/modules/splash/bindings/splash_binding.dart';
 import 'package:compe_client/modules/splash/views/splash_view.dart';
 import 'package:compe_client/route/route_name.dart';
@@ -27,9 +29,14 @@ class RoutePage {
       page: () => RegisterView(),
     ),
     GetPage(
-      name: RouteName.home,
-      binding: HomeBinding(),
-      page: () => HomeView(),
+      name: RouteName.main,
+      binding: MainBinding(),
+      page: () => MainView(),
+    ),
+    GetPage(
+      name: RouteName.detail,
+      binding: DetailBinding(),
+      page: () => DetailView(),
     ),
   ];
 }
