@@ -1,5 +1,5 @@
 import 'package:compe_client/core/utils/constant.dart';
-import 'package:compe_client/data/models/compe_model.dart';
+import 'package:compe_client/app/data/models/compe_model.dart';
 import 'package:flutter/material.dart';
 
 class CompeHomeCard extends StatelessWidget {

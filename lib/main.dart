@@ -1,7 +1,7 @@
-import 'package:compe_client/bindings/initial_binding.dart';
-import 'package:compe_client/data/services/storage_service.dart';
-import 'package:compe_client/route/route_name.dart';
-import 'package:compe_client/route/route_page.dart';
+import 'package:compe_client/app/bindings/initial_binding.dart';
+import 'package:compe_client/app/data/services/storage_service.dart';
+import 'package:compe_client/app/route/route_name.dart';
+import 'package:compe_client/app/route/route_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
