@@ -148,6 +148,16 @@ class ApiService extends GetxService {
     return res;
   }
 
+  Future<http.Response> getAllCompe() async {
+    final res = _handleRequest(
+      () async => http.get(
+        Uri.parse('$_baseUrl/compe/open/'),
+        headers: await _getHeaders(),
+      ),
+    );
+    return res;
+  }
+
   Future<http.Response> getCompeById({required String id}) async {
     final res = _handleRequest(
       () async => http.get(

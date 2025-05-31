@@ -1,3 +1,5 @@
+import 'package:compe_client/modules/all_compe/bindings/all_compe_binding.dart';
+import 'package:compe_client/modules/all_compe/views/all_compe_view.dart';
 import 'package:compe_client/modules/auth/bindings/login_binding.dart';
 import 'package:compe_client/modules/auth/bindings/register_binding.dart';
 import 'package:compe_client/modules/auth/views/login_view.dart';
@@ -37,6 +39,11 @@ class RoutePage {
       name: RouteName.detail,
       binding: DetailBinding(),
       page: () => DetailView(),
+    ),
+    GetPage(
+      name: RouteName.allCompe,
+      binding: AllCompeBinding(),
+      page: () => AllCompeView(),
     ),
   ];
 }

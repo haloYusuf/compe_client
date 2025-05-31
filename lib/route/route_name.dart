@@ -5,5 +5,6 @@ class RouteName {
   static const register = '/register';
 
   static const main = '/main';
+  static const allCompe = '/all-compe';
   static const detail = '/detail';
 }

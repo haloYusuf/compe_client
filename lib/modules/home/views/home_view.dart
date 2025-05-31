@@ -87,7 +87,7 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: controller.handleSeeAll,
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               vertical: 2,

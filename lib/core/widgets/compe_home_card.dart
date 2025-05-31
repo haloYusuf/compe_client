@@ -7,16 +7,18 @@ class CompeHomeCard extends StatelessWidget {
     super.key,
     required this.data,
     required this.onTap,
+    this.isAllCompe = false,
   });
   final CompeModel data;
   final Function() onTap;
+  final bool isAllCompe;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 200,
+        width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
@@ -42,12 +44,12 @@ class CompeHomeCard extends StatelessWidget {
               ),
               child: Image.network(
                 data.compeImg,
-                height: 150,
+                height: isAllCompe ? 100 : 150,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
                     '${Constant.assetImage}/default.jpg',
-                    height: 150,
+                    height: isAllCompe ? 100 : 150,
                     fit: BoxFit.cover,
                   );
                 },

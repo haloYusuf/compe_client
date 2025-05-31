@@ -1,39 +1,28 @@
 import 'dart:convert';
 
 import 'package:compe_client/data/models/compe_model.dart';
-import 'package:compe_client/data/models/user_model.dart';
 import 'package:compe_client/data/services/api_service.dart';
-import 'package:compe_client/data/services/storage_service.dart';
 import 'package:compe_client/route/route_name.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class AllCompeController extends GetxController {
   final ApiService _apiService = ApiService();
-  final StorageService _storageService = StorageService();
 
-  final _userModel = Rx<UserModel?>(null);
   final _isLoading = false.obs;
   final _isError = false.obs;
+  final _searchValue = ''.obs;
 
   final _compeModel = Rx<List<CompeModel>>([]);
+  final _filteredModel = Rx<List<CompeModel>>([]);
 
   @override
   void onReady() {
     super.onReady();
-    _getUserData();
     handleGetData();
   }
 
-  void _getUserData() {
-    _userModel.value = _storageService.getUserInfo();
-  }
-
-  UserModel? getUserData() {
-    return _userModel.value;
-  }
-
-  List<CompeModel> getHighlightCompe() {
-    return _compeModel.value;
+  List<CompeModel> getAllCompe() {
+    return _filteredModel.value;
   }
 
   bool getIsLoading() {
@@ -44,10 +33,21 @@ class HomeController extends GetxController {
     return _isError.value;
   }
 
+  void setSearchValue(String v) {
+    _searchValue.value = v;
+    _filteredModel.value = _compeModel.value
+        .where(
+          (element) => element.compeName.toLowerCase().contains(
+                _searchValue.value.toLowerCase(),
+              ),
+        )
+        .toList();
+  }
+
   void handleGetData() async {
     _isLoading.value = true;
     try {
-      var res = await _apiService.getHighlightCompe();
+      var res = await _apiService.getAllCompe();
       if (res.statusCode == 200) {
         _isError.value = false;
         var data = jsonDecode(res.body);
@@ -56,6 +56,7 @@ class HomeController extends GetxController {
             (v) => CompeModel.fromJson(v),
           ),
         );
+        _filteredModel.value = _compeModel.value;
       } else if (res.statusCode == 400) {
         _isError.value = true;
       }
@@ -66,16 +67,16 @@ class HomeController extends GetxController {
     _isLoading.value = false;
   }
 
-  void handleSeeAll() {
-    Get.toNamed(RouteName.allCompe);
-  }
-
   void handleListTapped(int index) {
     Get.toNamed(
       RouteName.detail,
       arguments: {
-        'data': _compeModel.value[index],
+        'data': _filteredModel.value[index],
       },
     );
+  }
+
+  void handleBack() {
+    Get.back();
   }
 }
