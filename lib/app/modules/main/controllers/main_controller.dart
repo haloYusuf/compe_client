@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
-  final AuthController _authController = AuthController();
-  final StorageService _storageService = StorageService();
+  final AuthController _authController = Get.find();
+  final StorageService _storageService = Get.find();
 
   final _currentIndex = 0.obs;
   final _listAllView = [

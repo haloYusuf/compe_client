@@ -1,5 +1,6 @@
 import 'package:compe_client/app/modules/detail_group/controllers/detail_group_controller.dart';
 import 'package:compe_client/core/utils/constant.dart';
+import 'package:compe_client/core/widgets/member_table.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +41,9 @@ class DetailGroupView extends GetView<DetailGroupController> {
                   children: [
                     Text('Gagal Mendapatkan Data!'),
                     ElevatedButton(
-                      onPressed: () => controller.handleGetData(groupId: controller.getInitData().groupModel.groupId),
+                      onPressed: () => controller.handleGetData(
+                        groupId: controller.getInitData().groupModel.groupId,
+                      ),
                       child: Text('Coba Lagi'),
                     ),
                   ],
@@ -50,245 +53,254 @@ class DetailGroupView extends GetView<DetailGroupController> {
               return Column(
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 18,
-                        children: [
-                          Image.network(
-                            controller.getDetailGroupData()!.groupImg,
-                            width: double.infinity,
-                            height: 300,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                '${Constant.assetImage}/default.jpg',
-                                height: 250,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              right: 12,
-                              left: 12,
-                              bottom: 6,
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        controller.handleGetData(
+                          groupId: controller.getInitData().groupModel.groupId,
+                        );
+                      },
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          spacing: 18,
+                          children: [
+                            Image.network(
+                              controller.getDetailGroupData()!.groupImg,
+                              width: double.infinity,
+                              height: 300,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  '${Constant.assetImage}/default.jpg',
+                                  height: 250,
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
-                            child: Column(
-                              spacing: 12,
-                              children: [
-                                Text(
-                                  controller.getDetailGroupData()!.groupName,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: Constant.fontHeading,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 6,
-                                    horizontal: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.green,
-                                  ),
-                                  child: Text(
-                                    controller
-                                                .getDetailGroupData()!
-                                                .groupStatus ==
-                                            0
-                                        ? 'Pending'
-                                        : controller
-                                                    .getDetailGroupData()!
-                                                    .groupStatus ==
-                                                1
-                                            ? 'Accepted'
-                                            : 'Rejected',
-                                    style: TextStyle(
-                                      fontFamily: Constant.fontHeading,
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Max Members : ',
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller
-                                          .getDetailGroupData()!
-                                          .maxMember
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Created : ',
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller
-                                          .getDetailGroupData()!
-                                          .groupCreatedAt,
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Competition : ',
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    Text(
-                                      controller
-                                          .getDetailGroupData()!
-                                          .compeName,
-                                      style: TextStyle(
-                                        fontFamily: Constant.fontContent,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 1,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  'Group Leader',
-                                  style: TextStyle(
-                                    fontFamily: Constant.fontContent,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: 12,
+                                left: 12,
+                                bottom: 6,
+                              ),
+                              child: Column(
+                                spacing: 12,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     spacing: 8,
                                     children: [
                                       Text(
                                         controller
                                             .getDetailGroupData()!
-                                            .leader
-                                            .userName,
+                                            .groupName,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontHeading,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () =>
+                                            controller.handleCopyId(context),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6),
+                                          child: Icon(
+                                            Icons.copy,
+                                            size: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 6,
+                                      horizontal: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: controller.getGroupStatus() == 0
+                                          ? Colors.blue
+                                          : controller.getGroupStatus() == 1
+                                              ? Colors.green
+                                              : Colors.red,
+                                    ),
+                                    child: Text(
+                                      controller.getGroupStatus() == 0
+                                          ? 'Pending'
+                                          : controller.getGroupStatus() == 1
+                                              ? 'Accepted'
+                                              : 'Rejected',
+                                      style: TextStyle(
+                                        fontFamily: Constant.fontHeading,
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Max Members : ',
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontContent,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        controller
+                                            .getDetailGroupData()!
+                                            .maxMember
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontContent,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Created : ',
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontContent,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        controller
+                                            .getDetailGroupData()!
+                                            .groupCreatedAt,
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontContent,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Competition : ',
+                                        style: TextStyle(
+                                          fontFamily: Constant.fontContent,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        controller
+                                            .getDetailGroupData()!
+                                            .compeName,
                                         style: TextStyle(
                                           fontFamily: Constant.fontContent,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      Text(
-                                        controller
-                                            .getDetailGroupData()!
-                                            .leader
-                                            .email,
-                                        style: TextStyle(
-                                          fontFamily: Constant.fontContent,
-                                          fontSize: 12,
-                                        ),
-                                      ),
                                     ],
                                   ),
-                                ),
-                                Container(
-                                  height: 1,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  'Group Member',
-                                  style: TextStyle(
-                                    fontFamily: Constant.fontContent,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: DataTable(
-                                    columns: [
-                                      DataColumn(
-                                        label: Text(
-                                          'User Name',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: Text(
-                                          'Email',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: Text(
-                                          'Role',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                    rows: controller
-                                        .getDetailGroupData()!
-                                        .members
-                                        .map(
-                                      (v) {
-                                        return DataRow(
-                                          cells: [
-                                            DataCell(Text(v.userName)),
-                                            DataCell(Text(v.email)),
-                                            DataCell(Text(
-                                              v.id ==
-                                                      controller
-                                                          .getDetailGroupData()!
-                                                          .leader
-                                                          .id
-                                                  ? 'Leader'
-                                                  : 'Member',
-                                            )),
+                                  controller
+                                              .getDetailGroupData()!
+                                              .groupStatus ==
+                                          -1
+                                      ? Row(
+                                          children: [
+                                            Text(
+                                              'Reject Message : ',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    Constant.fontContent,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              controller
+                                                  .getInitData()
+                                                  .groupModel
+                                                  .rejectedMessage!,
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    Constant.fontContent,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ],
-                                        );
-                                      },
-                                    ).toList(),
+                                        )
+                                      : SizedBox(),
+                                  Container(
+                                    height: 1,
+                                    color: Colors.black,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Group Leader',
+                                    style: TextStyle(
+                                      fontFamily: Constant.fontContent,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      spacing: 8,
+                                      children: [
+                                        Text(
+                                          controller
+                                              .getDetailGroupData()!
+                                              .leader
+                                              .userName,
+                                          style: TextStyle(
+                                            fontFamily: Constant.fontContent,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          controller
+                                              .getDetailGroupData()!
+                                              .leader
+                                              .email,
+                                          style: TextStyle(
+                                            fontFamily: Constant.fontContent,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: Colors.black,
+                                  ),
+                                  Text(
+                                    'Group Member',
+                                    style: TextStyle(
+                                      fontFamily: Constant.fontContent,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: MemberTable(
+                                      data: controller.getDetailGroupData()!,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -313,7 +325,7 @@ class DetailGroupView extends GetView<DetailGroupController> {
                       ],
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: controller.handleDeleteButton,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
@@ -321,7 +333,9 @@ class DetailGroupView extends GetView<DetailGroupController> {
                         ),
                       ),
                       child: Text(
-                        'Leave Group',
+                        controller.getIsAdmin()
+                            ? 'Remove Group'
+                            : 'Leave Group',
                         style: TextStyle(
                           fontFamily: Constant.fontHeading,
                           color: Colors.white,

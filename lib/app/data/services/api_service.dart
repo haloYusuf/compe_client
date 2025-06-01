@@ -236,6 +236,51 @@ class ApiService extends GetxService {
     return await _handleRequest(makeRequest);
   }
 
+  Future<http.Response> editGroup({
+    required String groupId,
+    required String groupName,
+    required String maxMember,
+    File? imageFile,
+  }) async {
+    Future<http.Response> makeRequest() async {
+      String uid = _storageService.getUserInfo()!.id;
+      var uri = Uri.parse(
+        '$_baseUrl/group/$groupId',
+      );
+      var request = http.MultipartRequest('PUT', uri);
+      request.headers.addAll(await _getMultipartHeaders());
+
+      request.fields['uid'] = uid;
+      request.fields['groupName'] = groupName;
+      request.fields['maxMember'] = maxMember;
+
+      if (imageFile != null) {
+        String fileName = imageFile.path.split('/').last;
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'image',
+            imageFile.path,
+            contentType: MediaType(
+              'image',
+              fileName
+                  .split(
+                    '.',
+                  )
+                  .lastWhere(
+                    (ext) => ext.isNotEmpty,
+                    orElse: () => 'jpg',
+                  ),
+            ),
+          ),
+        );
+      }
+      var streamedResponse = await request.send();
+      return await http.Response.fromStream(streamedResponse);
+    }
+
+    return await _handleRequest(makeRequest);
+  }
+
   Future<http.Response> joinGroup({required String groupId}) async {
     String uid = _storageService.getUserInfo()!.id;
     final res = _handleRequest(
@@ -257,6 +302,22 @@ class ApiService extends GetxService {
     final res = _handleRequest(
       () async => http.delete(
         Uri.parse('$_baseUrl/member/$groupId'),
+        headers: await _getHeaders(),
+        body: jsonEncode(
+          {
+            'uid': uid,
+          },
+        ),
+      ),
+    );
+    return res;
+  }
+
+  Future<http.Response> removeGroup({required String groupId}) async {
+    String uid = _storageService.getUserInfo()!.id;
+    final res = _handleRequest(
+      () async => http.delete(
+        Uri.parse('$_baseUrl/group/$groupId'),
         headers: await _getHeaders(),
         body: jsonEncode(
           {

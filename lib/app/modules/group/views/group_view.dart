@@ -29,10 +29,11 @@ class GroupView extends StatelessWidget {
             spacing: 12,
             children: [
               TextField(
+                controller: controller.searchController,
                 textInputAction: TextInputAction.search,
                 onChanged: controller.setSearchValue,
                 decoration: InputDecoration(
-                  hintText: 'Find Your Competitions ...',
+                  hintText: 'Find Your Group ...',
                   hintStyle: TextStyle(
                     fontFamily: Constant.fontContent,
                   ),
@@ -72,18 +73,25 @@ class GroupView extends StatelessWidget {
                         child: Text('Data yang dicari tidak ada!'),
                       );
                     } else {
-                      return ListView.builder(
-                        itemCount: controller.getAllGroup().length,
-                        itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.only(
-                            left: 6,
-                            right: 6,
-                            bottom: 12,
-                          ),
-                          child: GroupCard(
-                            data: controller.getAllGroup()[index],
-                            userId: controller.getUserId(),
-                            onItemTap: () => controller.handleItemTap(index),
+                      return RefreshIndicator(
+                        onRefresh: () async{
+                          controller.searchController.text = '';
+                          controller.getAllUserGroup();
+                        },
+                        child: ListView.builder(
+                          itemCount: controller.getAllGroup().length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: EdgeInsets.only(
+                              left: 6,
+                              right: 6,
+                              bottom: 12,
+                            ),
+                            child: GroupCard(
+                              data: controller.getAllGroup()[index],
+                              userId: controller.getUserId(),
+                              onItemTap: () => controller.handleItemTap(index),
+                              onEditTap: () => controller.handleEditTap(index),
+                            ),
                           ),
                         ),
                       );

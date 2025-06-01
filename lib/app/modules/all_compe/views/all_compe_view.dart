@@ -72,26 +72,29 @@ class AllCompeView extends GetView<AllCompeController> {
                     ),
                   ),
                   Expanded(
-                    child: controller.getAllCompe().isEmpty
-                        ? Center(
-                            child: Text(
-                              'Data yang dicari tidak ditemukan!',
+                    child: RefreshIndicator(
+                      onRefresh: () async => controller.handleGetData(),
+                      child: controller.getAllCompe().isEmpty
+                          ? Center(
+                              child: Text(
+                                'Data yang dicari tidak ditemukan!',
+                              ),
+                            )
+                          : GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 10,
+                              ),
+                              itemCount: controller.getAllCompe().length,
+                              itemBuilder: (context, index) => CompeHomeCard(
+                                data: controller.getAllCompe()[index],
+                                isAllCompe: true,
+                                onTap: () => controller.handleListTapped(index),
+                              ),
                             ),
-                          )
-                        : GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 10,
-                            ),
-                            itemCount: controller.getAllCompe().length,
-                            itemBuilder: (context, index) => CompeHomeCard(
-                              data: controller.getAllCompe()[index],
-                              isAllCompe: true,
-                              onTap: () => controller.handleListTapped(index),
-                            ),
-                          ),
+                    ),
                   ),
                 ],
               ),

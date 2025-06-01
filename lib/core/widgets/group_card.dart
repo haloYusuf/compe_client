@@ -8,10 +8,12 @@ class GroupCard extends StatelessWidget {
     required this.data,
     required this.userId,
     required this.onItemTap,
+    required this.onEditTap,
   });
   final AllGroupModel data;
   final String userId;
   final Function() onItemTap;
+  final Function() onEditTap;
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +122,11 @@ class GroupCard extends StatelessWidget {
             ),
             userId == data.groupModel.leaderId
                 ? IconButton(
-                    onPressed: () {},
+                    onPressed: onEditTap,
                     icon: Icon(
-                      Icons.delete_rounded,
+                      Icons.edit,
                       size: 24,
-                      color: Colors.red,
+                      color: Colors.black,
                     ),
                   )
                 : SizedBox(),

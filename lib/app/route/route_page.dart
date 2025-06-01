@@ -10,6 +10,8 @@ import 'package:compe_client/app/modules/detail_compe/bindings/detail_compe_bind
 import 'package:compe_client/app/modules/detail_compe/views/detail_compe_view.dart';
 import 'package:compe_client/app/modules/detail_group/bindings/detail_group_binding.dart';
 import 'package:compe_client/app/modules/detail_group/views/detail_group_view.dart';
+import 'package:compe_client/app/modules/edit_group/bindings/edit_group_binding.dart';
+import 'package:compe_client/app/modules/edit_group/views/edit_group_view.dart';
 import 'package:compe_client/app/modules/main/bindings/main_binding.dart';
 import 'package:compe_client/app/modules/main/views/main_view.dart';
 import 'package:compe_client/app/modules/splash/bindings/splash_binding.dart';
@@ -58,6 +60,11 @@ class RoutePage {
       name: RouteName.detailGroup,
       binding: DetailGroupBinding(),
       page: () => DetailGroupView(),
+    ),
+    GetPage(
+      name: RouteName.editGroup,
+      binding: EditGroupBinding(),
+      page: () => EditGroupView(),
     ),
   ];
 }

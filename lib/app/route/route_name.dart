@@ -10,4 +10,5 @@ class RouteName {
   static const detailCompe = '/detail-compe';
   static const createGroup = '/create-group';
   static const detailGroup = '/detail-group';
+  static const editGroup = '/edit-group';
 }

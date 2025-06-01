@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
-  final ApiService _apiService = ApiService();
+  final ApiService _apiService = Get.find();
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();

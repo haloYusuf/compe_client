@@ -8,8 +8,8 @@ import 'package:compe_client/app/route/route_name.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final ApiService _apiService = ApiService();
-  final StorageService _storageService = StorageService();
+  final ApiService _apiService = Get.find();
+  final StorageService _storageService = Get.find();
 
   final _userModel = Rx<UserModel?>(null);
   final _isLoading = false.obs;
@@ -17,9 +17,16 @@ class HomeController extends GetxController {
 
   final _compeModel = Rx<List<CompeModel>>([]);
 
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   _getUserData();
+  //   handleGetData();
+  // }
+
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     _getUserData();
     handleGetData();
   }

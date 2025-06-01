@@ -4,11 +4,13 @@ import 'package:compe_client/app/data/models/all_group_model.dart';
 import 'package:compe_client/app/data/services/api_service.dart';
 import 'package:compe_client/app/data/services/storage_service.dart';
 import 'package:compe_client/app/route/route_name.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class GroupController extends GetxController {
   final ApiService _apiService = Get.find();
   final StorageService _storageService = Get.find();
+  final TextEditingController searchController = TextEditingController();
 
   final _isLoading = false.obs;
   final _isError = false.obs;
@@ -17,9 +19,15 @@ class GroupController extends GetxController {
   final _allGroupModel = Rx<List<AllGroupModel>>([]);
   final _filteredModel = Rx<List<AllGroupModel>>([]);
 
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   getAllUserGroup();
+  // }
+
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     getAllUserGroup();
   }
 
@@ -73,9 +81,23 @@ class GroupController extends GetxController {
     _isLoading.value = false;
   }
 
-  void handleItemTap(int index) {
-    Get.toNamed(RouteName.detailGroup, arguments: {
+  void handleItemTap(int index) async {
+    var result = await Get.toNamed(RouteName.detailGroup, arguments: {
       'group': _filteredModel.value[index],
     });
+
+    if (result != null && result == true) {
+      getAllUserGroup();
+    }
+  }
+
+  void handleEditTap(int index) async {
+    var result = await Get.toNamed(RouteName.editGroup, arguments: {
+      'group': _filteredModel.value[index].groupModel,
+    });
+
+    if (result != null && result == true) {
+      getAllUserGroup();
+    }
   }
 }
