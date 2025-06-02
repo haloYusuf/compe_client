@@ -130,7 +130,7 @@ class HomeView extends StatelessWidget {
                             );
                           } else {
                             return SizedBox(
-                              height: 230,
+                              height: 240,
                               width: double.infinity,
                               child: ListView.builder(
                                 shrinkWrap: true,

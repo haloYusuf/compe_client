@@ -10,59 +10,125 @@ class SuccessDialog {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: const [
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFFF0FDF4),
+                Color(0xFFECFDF5),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
               BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                offset: Offset(0.0, 10.0),
+                color: Colors.green.withOpacity(0.1),
+                blurRadius: 20.0,
+                offset: const Offset(0.0, 8.0),
+                spreadRadius: 2.0,
+              ),
+              const BoxShadow(
+                color: Colors.black12,
+                blurRadius: 15.0,
+                offset: Offset(0.0, 4.0),
               ),
             ],
+            border: Border.all(
+              color: Colors.green.withOpacity(0.1),
+              width: 1.0,
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Icon(
-                Icons.done_rounded,
-                color: Colors.blue,
-                size: 50.0,
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.done_rounded,
+                  color: Color(0xFF10B981),
+                  size: 48.0,
+                ),
               ),
-              const SizedBox(height: 15.0),
+              const SizedBox(height: 20.0),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF1F2937),
+                  letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 10.0),
+              const SizedBox(height: 12.0),
+              Container(
+                width: 60.0,
+                height: 2.0,
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(1.0),
+                ),
+              ),
+              const SizedBox(height: 16.0),
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16.0),
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Color(0xFF6B7280),
+                  height: 1.5,
                 ),
-                onPressed: onTap,
-                child: const Text(
-                  'OK',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              const SizedBox(height: 28.0),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFF10B981),
+                      Color(0xFF059669),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.green.withOpacity(0.3),
+                      blurRadius: 8.0,
+                      offset: const Offset(0.0, 4.0),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 16,
+                    ),
+                  ),
+                  onPressed: onTap,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -73,3 +139,78 @@ class SuccessDialog {
     );
   }
 }
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+
+// class SuccessDialog {
+//   static void showSuccessDialog({
+//     String title = 'Berhasil',
+//     required String message,
+//     required Function() onTap,
+//   }) {
+//     Get.dialog(
+//       Dialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(10.0),
+//         ),
+//         elevation: 0,
+//         backgroundColor: Colors.transparent,
+//         child: Container(
+//           padding: const EdgeInsets.all(20.0),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(10.0),
+//             boxShadow: const [
+//               BoxShadow(
+//                 color: Colors.black26,
+//                 blurRadius: 10.0,
+//                 offset: Offset(0.0, 10.0),
+//               ),
+//             ],
+//           ),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: <Widget>[
+//               const Icon(
+//                 Icons.done_rounded,
+//                 color: Colors.blue,
+//                 size: 50.0,
+//               ),
+//               const SizedBox(height: 15.0),
+//               Text(
+//                 title,
+//                 style: const TextStyle(
+//                   fontSize: 18.0,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//               const SizedBox(height: 10.0),
+//               Text(
+//                 message,
+//                 textAlign: TextAlign.center,
+//                 style: const TextStyle(fontSize: 16.0),
+//               ),
+//               const SizedBox(height: 20.0),
+//               ElevatedButton(
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: Colors.red,
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(8.0),
+//                   ),
+//                   padding:
+//                       const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+//                 ),
+//                 onPressed: onTap,
+//                 child: const Text(
+//                   'OK',
+//                   style: TextStyle(color: Colors.white, fontSize: 16),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//       barrierDismissible: true,
+//     );
+//   }
+// }
