@@ -27,7 +27,7 @@ class ErrorDialog {
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
               BoxShadow(
-                color: Colors.red.withOpacity(0.1),
+                color: Colors.red.withAlpha((0.1 * 255).round()),
                 blurRadius: 20.0,
                 offset: const Offset(0.0, 8.0),
                 spreadRadius: 2.0,
@@ -39,7 +39,7 @@ class ErrorDialog {
               ),
             ],
             border: Border.all(
-              color: Colors.red.withOpacity(0.1),
+              color: Colors.red.withAlpha((0.1 * 255).round()),
               width: 1.0,
             ),
           ),
@@ -49,7 +49,7 @@ class ErrorDialog {
               Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
+                  color: Colors.red.withAlpha((0.1 * 255).round()),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -73,7 +73,7 @@ class ErrorDialog {
                 width: 60.0,
                 height: 2.0,
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.3),
+                  color: Colors.red.withAlpha((0.3 * 255).round()),
                   borderRadius: BorderRadius.circular(1.0),
                 ),
               ),
@@ -100,7 +100,7 @@ class ErrorDialog {
                   borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.red.withOpacity(0.3),
+                      color: Colors.red.withAlpha((0.3 * 255).round()),
                       blurRadius: 8.0,
                       offset: const Offset(0.0, 4.0),
                     ),
@@ -140,80 +140,3 @@ class ErrorDialog {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// class ErrorDialog {
-//   static void showErrorDialog({
-//     String title = 'Error',
-//     required String message,
-//   }) {
-//     Get.dialog(
-//       Dialog(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(10.0),
-//         ),
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         child: Container(
-//           padding: const EdgeInsets.all(20.0),
-//           decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.circular(10.0),
-//             boxShadow: const [
-//               BoxShadow(
-//                 color: Colors.black26,
-//                 blurRadius: 10.0,
-//                 offset: Offset(0.0, 10.0),
-//               ),
-//             ],
-//           ),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: <Widget>[
-//               const Icon(
-//                 Icons.error_outline,
-//                 color: Colors.red,
-//                 size: 50.0,
-//               ),
-//               const SizedBox(height: 15.0),
-//               Text(
-//                 title,
-//                 style: const TextStyle(
-//                   fontSize: 18.0,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               const SizedBox(height: 10.0),
-//               Text(
-//                 message,
-//                 textAlign: TextAlign.center,
-//                 style: const TextStyle(fontSize: 16.0),
-//               ),
-//               const SizedBox(height: 20.0),
-//               ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.red,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(8.0),
-//                   ),
-//                   padding:
-//                       const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-//                 ),
-//                 onPressed: () {
-//                   Get.back();
-//                 },
-//                 child: const Text(
-//                   'OK',
-//                   style: TextStyle(color: Colors.white, fontSize: 16),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       barrierDismissible: true,
-//     );
-//   }
-// }

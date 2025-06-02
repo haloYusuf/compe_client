@@ -19,7 +19,7 @@ class MemberTable extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha((0.1 * 255).round()),
             spreadRadius: 1,
             blurRadius: 4,
             offset: const Offset(0, 2),
@@ -29,11 +29,10 @@ class MemberTable extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: DataTable(
-          headingRowColor: MaterialStateProperty.all(
+          headingRowColor: WidgetStateProperty.all(
             Colors.grey.shade50,
           ),
           headingRowHeight: 56,
-          dataRowHeight: 60,
           columnSpacing: 20,
           horizontalMargin: 20,
           dividerThickness: 0.5,
@@ -103,10 +102,10 @@ class MemberTable extends StatelessWidget {
             (v) {
               final isLeader = v.id == data.leader.id;
               return DataRow(
-                color: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.hovered)) {
-                      return Colors.blue.withOpacity(0.04);
+                color: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.hovered)) {
+                      return Colors.blue.withAlpha((0.04 * 255).round());
                     }
                     return null;
                   },
@@ -210,54 +209,3 @@ class MemberTable extends StatelessWidget {
     );
   }
 }
-// import 'package:compe_client/app/data/models/detail_group_model.dart';
-// import 'package:flutter/material.dart';
-
-// class MemberTable extends StatelessWidget {
-//   const MemberTable({
-//     super.key,
-//     required this.data,
-//   });
-//   final DetailGroupModel data;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return DataTable(
-//       columns: [
-//         DataColumn(
-//           label: Text(
-//             'User Name',
-//             style: TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//         ),
-//         DataColumn(
-//           label: Text(
-//             'Email',
-//             style: TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//         ),
-//         DataColumn(
-//           label: Text(
-//             'Role',
-//             style: TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//         ),
-//       ],
-//       rows: data.members.map(
-//         (v) {
-//           return DataRow(
-//             cells: [
-//               DataCell(Text(v.userName)),
-//               DataCell(Text(v.email)),
-//               DataCell(
-//                 Text(
-//                   v.id == data.leader.id ? 'Leader' : 'Member',
-//                 ),
-//               ),
-//             ],
-//           );
-//         },
-//       ).toList(),
-//     );
-//   }
-// }

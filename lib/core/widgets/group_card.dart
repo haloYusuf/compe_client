@@ -40,40 +40,37 @@ class GroupCard extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withAlpha((0.08 * 255).round()),
                   spreadRadius: 0,
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withAlpha((0.04 * 255).round()),
                   spreadRadius: 0,
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
               ],
               border: Border.all(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.withAlpha((0.1 * 255).round()),
                 width: 1,
               ),
             ),
             child: IntrinsicHeight(
-              // This makes the row adapt to the tallest child
               child: Row(
                 children: [
-                  // Image Section
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       bottomLeft: Radius.circular(16),
                     ),
                     child: SizedBox(
-                      width: 110,
+                      width: 120,
                       child: Image.network(
                         data.groupModel.groupImg,
-                        width: 110,
-                        fit: BoxFit
-                            .cover, // This will cover the entire available height
+                        width: 120,
+                        fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset(
                             '${Constant.assetImage}/default.jpg',
@@ -84,20 +81,16 @@ class GroupCard extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // Content Section
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment
-                            .spaceBetween, // Distribute content evenly
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Group Name
                               Text(
                                 data.groupModel.groupName,
                                 style: TextStyle(
@@ -111,14 +104,13 @@ class GroupCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 8),
-
-                              // Leader Info
                               Row(
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
-                                      color: Colors.blue.withOpacity(0.1),
+                                      color: Colors.blue
+                                          .withAlpha((0.1 * 255).round()),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Icon(
@@ -144,14 +136,13 @@ class GroupCard extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 6),
-
-                              // Competition Info
                               Row(
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
-                                      color: Colors.orange.withOpacity(0.1),
+                                      color: Colors.orange
+                                          .withAlpha((0.1 * 255).round()),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Icon(
@@ -178,96 +169,76 @@ class GroupCard extends StatelessWidget {
                               ),
                             ],
                           ),
-
                           const SizedBox(height: 12),
-
-                          // Status and Edit Button Row
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Status Badge
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 6,
-                                  horizontal: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: data.groupModel.groupStatus == 0
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 6,
+                              horizontal: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: data.groupModel.groupStatus == 0
+                                    ? [
+                                        Colors.blue.shade400,
+                                        Colors.blue.shade600
+                                      ]
+                                    : data.groupModel.groupStatus == 1
                                         ? [
-                                            Colors.blue.shade400,
-                                            Colors.blue.shade600
+                                            Colors.green.shade400,
+                                            Colors.green.shade600
                                           ]
-                                        : data.groupModel.groupStatus == 1
-                                            ? [
-                                                Colors.green.shade400,
-                                                Colors.green.shade600
-                                              ]
-                                            : [
-                                                Colors.red.shade400,
-                                                Colors.red.shade600
-                                              ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: (data.groupModel.groupStatus == 0
-                                              ? Colors.blue
-                                              : data.groupModel.groupStatus == 1
-                                                  ? Colors.green
-                                                  : Colors.red)
-                                          .withOpacity(0.3),
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Text(
-                                  data.groupModel.groupStatus == 0
-                                      ? 'Pending'
-                                      : data.groupModel.groupStatus == 1
-                                          ? 'Accepted'
-                                          : 'Rejected',
-                                  style: TextStyle(
-                                    fontFamily: Constant.fontContent,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                    letterSpacing: 0.2,
-                                  ),
-                                ),
+                                        : [
+                                            Colors.red.shade400,
+                                            Colors.red.shade600
+                                          ],
                               ),
-
-                              // Edit Button
-                              if (userId == data.groupModel.leaderId)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: Colors.grey.withOpacity(0.2),
-                                    ),
-                                  ),
-                                  child: IconButton(
-                                    onPressed: onEditTap,
-                                    icon: Icon(
-                                      Icons.edit_outlined,
-                                      size: 20,
-                                      color: Colors.grey.shade700,
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    constraints: const BoxConstraints(
-                                      minWidth: 36,
-                                      minHeight: 36,
-                                    ),
-                                  ),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: (data.groupModel.groupStatus == 0
+                                          ? Colors.blue
+                                          : data.groupModel.groupStatus == 1
+                                              ? Colors.green
+                                              : Colors.red)
+                                      .withAlpha((0.3 * 255).round()),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
                                 ),
-                            ],
+                              ],
+                            ),
+                            child: Text(
+                              data.groupModel.groupStatus == 0
+                                  ? 'Pending'
+                                  : data.groupModel.groupStatus == 1
+                                      ? 'Accepted'
+                                      : 'Rejected',
+                              style: TextStyle(
+                                fontFamily: Constant.fontContent,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                letterSpacing: 0.2,
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
+                  if (userId == data.groupModel.leaderId)
+                    IconButton(
+                      onPressed: onEditTap,
+                      icon: Icon(
+                        Icons.edit_outlined,
+                        size: 20,
+                        color: Colors.grey.shade700,
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      constraints: const BoxConstraints(
+                        minWidth: 36,
+                        minHeight: 36,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -277,141 +248,3 @@ class GroupCard extends StatelessWidget {
     );
   }
 }
-// import 'package:compe_client/app/data/models/all_group_model.dart';
-// import 'package:compe_client/core/utils/constant.dart';
-// import 'package:flutter/material.dart';
-
-// class GroupCard extends StatelessWidget {
-//   const GroupCard({
-//     super.key,
-//     required this.data,
-//     required this.userId,
-//     required this.onItemTap,
-//     required this.onEditTap,
-//   });
-//   final AllGroupModel data;
-//   final String userId;
-//   final Function() onItemTap;
-//   final Function() onEditTap;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: onItemTap,
-//       borderRadius: BorderRadius.circular(12),
-//       child: Container(
-//         width: double.infinity,
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(12),
-//           color: Colors.white,
-//           boxShadow: [
-//             BoxShadow(
-//               color: Colors.black.withAlpha(
-//                 (0.1 * 255).round(),
-//               ),
-//               spreadRadius: 0,
-//               blurRadius: 4,
-//               offset: Offset(0, 4),
-//             ),
-//           ],
-//         ),
-//         child: Row(
-//           spacing: 12,
-//           children: [
-//             ClipRRect(
-//               borderRadius: BorderRadius.only(
-//                 topLeft: Radius.circular(12),
-//                 bottomLeft: Radius.circular(12),
-//               ),
-//               child: Image.network(
-//                 data.groupModel.groupImg,
-//                 height: 100,
-//                 width: 100,
-//                 fit: BoxFit.cover,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return Image.asset(
-//                     '${Constant.assetImage}/default.jpg',
-//                     height: 100,
-//                     width: 100,
-//                     fit: BoxFit.cover,
-//                   );
-//                 },
-//               ),
-//             ),
-//             Expanded(
-//               child: Padding(
-//                 padding: const EdgeInsets.symmetric(vertical: 8),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   spacing: 2,
-//                   children: [
-//                     Text(
-//                       data.groupModel.groupName,
-//                       style: TextStyle(
-//                         fontFamily: Constant.fontHeading,
-//                         fontSize: 14,
-//                         fontWeight: FontWeight.w600,
-//                       ),
-//                     ),
-//                     Text(
-//                       'Leader : ${data.userModel.userName}',
-//                       style: TextStyle(
-//                         fontFamily: Constant.fontContent,
-//                         fontSize: 12,
-//                         fontWeight: FontWeight.w400,
-//                       ),
-//                     ),
-//                     Text(
-//                       'Competition : ${data.compeModel.compeName}',
-//                       style: TextStyle(
-//                         fontFamily: Constant.fontContent,
-//                         fontSize: 12,
-//                         fontWeight: FontWeight.w400,
-//                       ),
-//                     ),
-//                     Container(
-//                       padding: EdgeInsets.symmetric(
-//                         vertical: 2,
-//                         horizontal: 6,
-//                       ),
-//                       decoration: BoxDecoration(
-//                         color: data.groupModel.groupStatus == 0
-//                             ? Colors.blue
-//                             : data.groupModel.groupStatus == 1
-//                                 ? Colors.green
-//                                 : Colors.red,
-//                         borderRadius: BorderRadius.circular(8),
-//                       ),
-//                       child: Text(
-//                         data.groupModel.groupStatus == 0
-//                             ? 'Pending'
-//                             : data.groupModel.groupStatus == 1
-//                                 ? 'Accepted'
-//                                 : 'Rejected',
-//                         style: TextStyle(
-//                           fontFamily: Constant.fontContent,
-//                           fontSize: 12,
-//                           color: Colors.white,
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             userId == data.groupModel.leaderId
-//                 ? IconButton(
-//                     onPressed: onEditTap,
-//                     icon: Icon(
-//                       Icons.edit,
-//                       size: 24,
-//                       color: Colors.black,
-//                     ),
-//                   )
-//                 : SizedBox(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

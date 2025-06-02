@@ -28,7 +28,7 @@ class SuccessDialog {
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
               BoxShadow(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withAlpha((0.1 * 255).round()),
                 blurRadius: 20.0,
                 offset: const Offset(0.0, 8.0),
                 spreadRadius: 2.0,
@@ -40,7 +40,7 @@ class SuccessDialog {
               ),
             ],
             border: Border.all(
-              color: Colors.green.withOpacity(0.1),
+              color: Colors.green.withAlpha((0.1 * 255).round()),
               width: 1.0,
             ),
           ),
@@ -50,7 +50,7 @@ class SuccessDialog {
               Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: Colors.green.withAlpha((0.1 * 255).round()),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -74,7 +74,7 @@ class SuccessDialog {
                 width: 60.0,
                 height: 2.0,
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.3),
+                  color: Colors.green.withAlpha((0.3 * 255).round()),
                   borderRadius: BorderRadius.circular(1.0),
                 ),
               ),
@@ -101,7 +101,7 @@ class SuccessDialog {
                   borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.green.withOpacity(0.3),
+                      color: Colors.green.withAlpha((0.3 * 255).round()),
                       blurRadius: 8.0,
                       offset: const Offset(0.0, 4.0),
                     ),
@@ -139,78 +139,3 @@ class SuccessDialog {
     );
   }
 }
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// class SuccessDialog {
-//   static void showSuccessDialog({
-//     String title = 'Berhasil',
-//     required String message,
-//     required Function() onTap,
-//   }) {
-//     Get.dialog(
-//       Dialog(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(10.0),
-//         ),
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         child: Container(
-//           padding: const EdgeInsets.all(20.0),
-//           decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.circular(10.0),
-//             boxShadow: const [
-//               BoxShadow(
-//                 color: Colors.black26,
-//                 blurRadius: 10.0,
-//                 offset: Offset(0.0, 10.0),
-//               ),
-//             ],
-//           ),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: <Widget>[
-//               const Icon(
-//                 Icons.done_rounded,
-//                 color: Colors.blue,
-//                 size: 50.0,
-//               ),
-//               const SizedBox(height: 15.0),
-//               Text(
-//                 title,
-//                 style: const TextStyle(
-//                   fontSize: 18.0,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               const SizedBox(height: 10.0),
-//               Text(
-//                 message,
-//                 textAlign: TextAlign.center,
-//                 style: const TextStyle(fontSize: 16.0),
-//               ),
-//               const SizedBox(height: 20.0),
-//               ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.red,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(8.0),
-//                   ),
-//                   padding:
-//                       const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-//                 ),
-//                 onPressed: onTap,
-//                 child: const Text(
-//                   'OK',
-//                   style: TextStyle(color: Colors.white, fontSize: 16),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       barrierDismissible: true,
-//     );
-//   }
-// }
